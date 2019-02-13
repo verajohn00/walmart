@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,10 +29,16 @@ public class MainActivity extends AppCompatActivity {
         call.execute();
     }
 
+    public void recallService(View v){
+
+        ThreadCall call = new ThreadCall();
+        call.execute();
+    }
 
     class ThreadCall extends AsyncTask<Void,Void,Void>{
 
         ProgressBar bar = findViewById(R.id.bar);
+        Button button = findViewById(R.id.retry);
         ConstraintLayout vista = findViewById(R.id.viewData);
 
         @Override
@@ -38,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             bar.setVisibility(View.VISIBLE);
             vista.setVisibility(View.INVISIBLE);
-
+            button.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -57,18 +66,23 @@ public class MainActivity extends AppCompatActivity {
                             vista.setVisibility(View.VISIBLE);
 
                             Producto producto = response.body();
+                            TextView nombre = findViewById(R.id.nombreText);
+                            TextView departamento = findViewById(R.id.departmentText);
+                            TextView codigo = findViewById(R.id.codigoText);
+                            TextView precio = findViewById(R.id.precioText);
 
-                            break;
-                        case 401:
-
-                            bar.setVisibility(View.INVISIBLE);
-                            vista.setVisibility(View.VISIBLE);
+                            nombre.setText(producto.getSkuDisplayNameText());
+                            departamento.setText(producto.getDepartment());
+                            codigo.setText(producto.getSkuId());
+                            precio.setText(producto.getBasePrice());
 
                             break;
                         default:
 
+                            Toast.makeText(MainActivity.this,getString(R.string.error),Toast.LENGTH_LONG).show();
+
                             bar.setVisibility(View.INVISIBLE);
-                            vista.setVisibility(View.VISIBLE);
+                            button.setVisibility(View.VISIBLE);
 
                             break;
                     }
@@ -77,30 +91,17 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Producto> call, Throwable t) {
 
+                    Toast.makeText(MainActivity.this,getString(R.string.error),Toast.LENGTH_LONG).show();
                     bar.setVisibility(View.INVISIBLE);
-                    vista.setVisibility(View.VISIBLE);
-
+                    button.setVisibility(View.VISIBLE);
 
                 }
             });
 
-
-
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            bar.setVisibility(View.INVISIBLE);
-            vista.setVisibility(View.VISIBLE);
-
-
-
-        }
     }
-
 }
 
 

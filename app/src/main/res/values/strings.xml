@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Walmart</string>
+    <string name="error">Intenta de nuevo por favor.</string>
+    <string name="precio">Precio</string>
+    <string name="codigo">Código</string>
+    <string name="departamento">Departamento</string>
+    <string name="nombre_del_producto">Nombre del producto</string>
+    <string name="vuelve_a_intentar">Vuelve a intentar</string>
 </resources>
