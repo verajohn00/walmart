@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressBar bar = findViewById(R.id.bar);
         ConstraintLayout vista = findViewById(R.id.viewData);
+        Producto p;
 
         @Override
         protected void onPreExecute() {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             ApiClient api = new ApiClient();
-            Producto p;
+            p = api.getProduct();
 
 
 
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
             bar.setVisibility(View.INVISIBLE);
             vista.setVisibility(View.VISIBLE);
+
+
 
         }
     }

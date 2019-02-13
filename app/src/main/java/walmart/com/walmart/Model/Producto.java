@@ -1,13 +1,19 @@
 package walmart.com.walmart.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Producto {
 
+    @SerializedName("skuDisplayNameText")
     String skuDisplayNameText;
+    @SerializedName("department")
     String department;
-    long skuId;
-    double basePrice;
+    @SerializedName("skuId")
+    String skuId;
+    @SerializedName("basePrice")
+    String basePrice;
 
-    public Producto(String skuDisplayNameText, String department, long skuId, double basePrice) {
+    public Producto(String skuDisplayNameText, String department, String skuId, String basePrice) {
         this.skuDisplayNameText = skuDisplayNameText;
         this.department = department;
         this.skuId = skuId;
@@ -30,19 +36,19 @@ public class Producto {
         this.department = department;
     }
 
-    public long getSkuId() {
+    public String getSkuId() {
         return skuId;
     }
 
-    public void setSkuId(long skuId) {
+    public void setSkuId(String skuId) {
         this.skuId = skuId;
     }
 
-    public double getBasePrice() {
+    public String getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(double basePrice) {
+    public void setBasePrice(String basePrice) {
         this.basePrice = basePrice;
     }
 }
