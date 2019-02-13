@@ -17,7 +17,7 @@ public class ApiClient {
 
     String url = "https://super.walmart.com.mx/";
 
-    public Producto getProduct(){
+    public Call<Producto> getProduct(){
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -30,32 +30,7 @@ public class ApiClient {
 
         Cliente restClient = retrofit.create(Cliente.class);
         Call<Producto> call = restClient.getData();
-
-        call.enqueue(new Callback<Producto>() {
-            @Override
-            public void onResponse(Call<Producto> call, Response<Producto> response) {
-                switch (response.code()) {
-                    case 200:
-                        Producto data = response.body();
-
-                        //view.notifyDataSetChanged(data.getResults());
-                        break;
-                    case 401:
-
-                        break;
-                    default:
-
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Producto> call, Throwable t) {
-                Log.e("fail","");
-            }
-        });
-
-        return null;
+        return call;
 
     }
 

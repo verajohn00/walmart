@@ -4,9 +4,13 @@ import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import walmart.com.walmart.Api.ApiClient;
 import walmart.com.walmart.Model.Producto;
 import walmart.com.walmart.R;
@@ -27,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressBar bar = findViewById(R.id.bar);
         ConstraintLayout vista = findViewById(R.id.viewData);
-        Producto p;
 
         @Override
         protected void onPreExecute() {
@@ -42,7 +45,44 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             ApiClient api = new ApiClient();
-            p = api.getProduct();
+            Call<Producto> call = api.getProduct();
+
+            call.enqueue(new Callback<Producto>() {
+                @Override
+                public void onResponse(Call<Producto> call, Response<Producto> response) {
+                    switch (response.code()) {
+                        case 200:
+
+                            bar.setVisibility(View.INVISIBLE);
+                            vista.setVisibility(View.VISIBLE);
+
+                            Producto producto = response.body();
+
+                            break;
+                        case 401:
+
+                            bar.setVisibility(View.INVISIBLE);
+                            vista.setVisibility(View.VISIBLE);
+
+                            break;
+                        default:
+
+                            bar.setVisibility(View.INVISIBLE);
+                            vista.setVisibility(View.VISIBLE);
+
+                            break;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Producto> call, Throwable t) {
+
+                    bar.setVisibility(View.INVISIBLE);
+                    vista.setVisibility(View.VISIBLE);
+
+
+                }
+            });
 
 
 
